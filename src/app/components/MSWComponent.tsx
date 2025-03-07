@@ -7,6 +7,7 @@ const mockingEnabledPromise =
   typeof window !== "undefined"
     ? import("@/mocks/browser").then(async ({ default: worker }) => {
         if (process.env.NODE_ENV === "production") {
+          // 프로덕션일때는 작동 안함
           return;
         }
         await worker.start({

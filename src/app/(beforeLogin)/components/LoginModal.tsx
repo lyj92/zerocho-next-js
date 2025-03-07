@@ -9,7 +9,9 @@ export default function LoginModal() {
   const [password, setPassword] = useState();
   const [message, setMessage] = useState();
   const onSubmit = () => {};
-  const onClickClose = () => {};
+  const onClickClose = () => {
+    router.back();
+  };
 
   const onChangeId = () => {};
 
@@ -32,7 +34,6 @@ export default function LoginModal() {
             </svg>
           </button>
           <div>로그인하세요.</div>
-          <div className="hi">123123</div>
         </div>
         <form onSubmit={onSubmit}>
           <div className={style.modalBody}>
@@ -40,14 +41,7 @@ export default function LoginModal() {
               <label className={style.inputLabel} htmlFor="id">
                 아이디
               </label>
-              <input
-                id="id"
-                className={style.input}
-                value={id}
-                onChange={onChangeId}
-                type="text"
-                placeholder=""
-              />
+              <input id="id" className={style.input} value={id} onChange={onChangeId} type="text" placeholder="" />
             </div>
             <div className={style.inputDiv}>
               <label className={style.inputLabel} htmlFor="password">
