@@ -14,5 +14,9 @@ type Props = {
 export default function TabProvider({ children }: Props) {
   const [tab, setTab] = useState("");
 
-  return <tabContext.Provider value={{ tab, setTab }}>{children}</tabContext.Provider>;
+  return (
+    <tabContext.Provider value={{ tab, setTab }}>
+      {children}
+    </tabContext.Provider>
+  );
 }
