@@ -1,13 +1,22 @@
 "use client";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 export default function LogOutButton() {
-  const me = {
-    id: "zerocho0",
-    image: "/profile.jpg",
-    nickname: "제로초",
+  const router = useRouter();
+  const { data: me } = useSession();
+
+  const onLogOut = () => {
+    signOut({ redirect: false }).then(() => {
+      router.replace("/");
+    });
   };
 
-  const onLogOut = () => {};
+  console.log(me, "?me?");
+
+  if (!me?.user) {
+    return null;
+  }
 
   return (
     <button
@@ -16,15 +25,19 @@ export default function LogOutButton() {
     >
       <div className="w-[40px] h-[40px] relative rounded-full overflow-hidden mr-2">
         <Image
-          src={me.image}
-          alt={me?.nickname}
+          src={
+            me?.user?.image
+              ? `${process.env.NEXT_PUBLIC_BASE_URL}/${me?.user?.image}`
+              : ""
+          }
+          alt={me?.user?.name ? me?.user?.name : ""}
           fill
           className="object-cover"
         />
       </div>
       <div className="flex flex-col justify-start items-start">
-        <div>{me.nickname}</div>
-        <div>{me.id}</div>
+        <div>{me?.user?.name}</div>
+        <div>{me?.user?.id}</div>
       </div>
     </button>
   );

@@ -7,12 +7,14 @@ import TrendSection from "./components/TrendSection";
 import FollowRecommend from "./components/FollowRecommend";
 import RightSearchZone from "./components/RightSearchZone";
 import SearchForm from "./components/SearchForm";
+import { auth } from "@/auth";
 type Props = {
   children: React.ReactNode;
   modal: React.ReactNode;
 };
 
-export default function AfterLoginLayout({ children, modal }: Props) {
+export default async function AfterLoginLayout({ children, modal }: Props) {
+  const session = await auth();
   return (
     <div className="flex justify-center items-stretch">
       <header className="flex flex-end flex-col flex-grow-1 h-[100vh]">
@@ -21,22 +23,32 @@ export default function AfterLoginLayout({ children, modal }: Props) {
           <div className="fixed w-[275px]  h-[100vh] ">
             <Link href={"/home"} className="inline-block">
               <div className="w-[50px] h-[50px] rounded-full hover:bg-gray-200 flex items-center justify-center duration-200">
-                <Image src={img?.logo} alt="z.com 로고" width={40} height={40} />
+                <Image
+                  src={img?.logo}
+                  alt="z.com 로고"
+                  width={40}
+                  height={40}
+                />
               </div>
             </Link>
-            <nav>
-              <ul>
-                <NavMenu />
-              </ul>
-              <Link
-                href={"/compose/tweet"}
-                className="justify-center items-center text-center border h-[50px]  inline-block w-full flex rounded-full bg-blue-200 hover:bg-blue-400 hover:text-white hover:border-blue-200 "
-              >
-                게시하기
-              </Link>
-            </nav>
 
-            <LogOutButton />
+            {session?.user && (
+              <>
+                <nav>
+                  <ul>
+                    <NavMenu />
+                  </ul>
+                  <Link
+                    href={"/compose/tweet"}
+                    className="justify-center items-center text-center border h-[50px]  inline-block w-full flex rounded-full bg-blue-200 hover:bg-blue-400 hover:text-white hover:border-blue-200 "
+                  >
+                    게시하기
+                  </Link>
+                </nav>
+
+                <LogOutButton />
+              </>
+            )}
           </div>
         </section>
       </header>

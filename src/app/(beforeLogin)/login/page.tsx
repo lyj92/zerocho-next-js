@@ -3,9 +3,16 @@
 import { useRouter } from "next/navigation";
 import Main from "../components/main";
 import { useEffect } from "react";
-
+import { useSession } from "next-auth/react";
 export default function Login() {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  // if (session?.user) {
+  //   router?.replace("/home");
+  //   return null;
+  // }
+
   useEffect(() => {
     router.replace("/i/flow/login");
   }, []);

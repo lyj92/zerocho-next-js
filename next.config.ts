@@ -5,7 +5,13 @@ const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: false,
   images: {
-    domains: ["picsum.photos", "via.placeholder.com", "cloudflare-ipfs.com", "loremflickr.com"],
+    domains: [
+      "picsum.photos",
+      "via.placeholder.com",
+      "cloudflare-ipfs.com",
+      "loremflickr.com",
+      "localhost",
+    ],
   },
 };
 

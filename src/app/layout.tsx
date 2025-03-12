@@ -2,8 +2,11 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
 import { MSWProvider } from "./components/MSWComponent";
-
-if (process.env.NEXT_RUNTIME === "nodejs" && process.env.NODE_ENV !== "production") {
+import AuthSession from "./components/AuthSession";
+if (
+  process.env.NEXT_RUNTIME === "nodejs" &&
+  process.env.NODE_ENV !== "production"
+) {
   const { server } = require("@/mocks/http");
   server.listen();
 }
@@ -22,7 +25,9 @@ export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MSWProvider>{children}</MSWProvider>
+        <MSWProvider>
+          <AuthSession>{children}</AuthSession>
+        </MSWProvider>
       </body>
     </html>
   );
