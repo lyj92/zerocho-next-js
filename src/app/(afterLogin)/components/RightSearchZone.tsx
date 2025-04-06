@@ -5,10 +5,10 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import SearchForm from "./SearchForm";
 export default function RightSearchZone() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); // 읽기 전용
   const router = useRouter();
   const onChangeFollow = () => {
-    const newSearchParams = new URLSearchParams(searchParams);
+    const newSearchParams = new URLSearchParams(searchParams); // 읽기전용 훅 이라서 따로 복사를 해야함
     newSearchParams.set("pf", "on");
     router.replace(`/search?${newSearchParams.toString()}`);
   };
@@ -38,7 +38,9 @@ export default function RightSearchZone() {
               />
             </div>
             <div className="flex flex-row justify-between items-center mt-2">
-              <div className="text-sm text-gray-600">내가 팔로우하는 사람들</div>
+              <div className="text-sm text-gray-600">
+                내가 팔로우하는 사람들
+              </div>
               <input
                 type="radio"
                 name="pf"

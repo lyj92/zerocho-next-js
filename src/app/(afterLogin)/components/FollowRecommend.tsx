@@ -1,6 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import { img } from "../../../../public";
-export default function FollowRecommend() {
+import { User } from "@/app/model/User";
+import Link from "next/link";
+import { MouseEventHandler } from "react";
+type Props = {
+  user: User;
+};
+export default function FollowRecommend({ user }: Props) {
+  const onFollow: MouseEventHandler<HTMLButtonElement> = (e) => {};
   return (
     <div className="flex flex-row justify-between items-center my-5">
       <div className="flex flex-row ">

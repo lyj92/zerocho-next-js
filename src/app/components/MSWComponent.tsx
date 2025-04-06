@@ -10,7 +10,7 @@ const mockingEnabledPromise =
           // 프로덕션일때는 작동 안함
           return;
         }
-        await worker.start({
+        await worker?.start({
           onUnhandledRequest(request: Request, print) {
             if (request.url.includes("_next")) {
               // next 자체 서버에서 처리 msw에서 처리하지 않음
@@ -19,7 +19,7 @@ const mockingEnabledPromise =
             print.warning();
           },
         });
-        worker.use(...handlers);
+        worker?.use(...handlers);
         (module as any).hot?.dispose(() => {
           worker.stop();
         });

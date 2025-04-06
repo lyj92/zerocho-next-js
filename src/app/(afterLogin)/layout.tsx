@@ -9,6 +9,7 @@ import RightSearchZone from "./components/RightSearchZone";
 import SearchForm from "./components/SearchForm";
 import { auth } from "@/auth";
 import RQProvider from "./components/RQProvider";
+import FollowRecommendSection from "./components/FollowRecommentdSection";
 type Props = {
   children: React.ReactNode;
   modal: React.ReactNode;
@@ -62,9 +63,7 @@ export default async function AfterLoginLayout({ children, modal }: Props) {
               <TrendSection />
               <div className="bg-gray-50 p-2 rounded-[20px] mt-14">
                 <h2 className="text-xl font-semibold">팔로우 추천</h2>
-                <FollowRecommend />
-                <FollowRecommend />
-                <FollowRecommend />
+                <FollowRecommendSection />
               </div>
             </section>
           </div>

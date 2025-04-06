@@ -2,38 +2,21 @@ import Tab from "./components/Tab";
 import TabProvider from "./components/tabProvider";
 import PostForm from "./components/PostForm";
 import Post from "../components/Post";
+import { getPostRecommends } from "./lib/getPostRecommends";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-
-async function getPostRecommends() {
-  const res = await fetch(
-    `${process?.env?.NEXT_PUBLIC_BASE_URL}/api/postRecommends`,
-    {
-      next: {
-        tags: ["posts", "recommends"],
-        revalidate: 60,
-      },
-      // cache: "no-store", // next.js 15버젼에서는 기본값 (없어도 됨) no-store 일때 revalidate 설정은 불가 => 말이 안되는 모순되는 상황 캐시를 하지 말라는데 캐시 값을 1분마다 지워라는 성립되지않음
-      // cache: "force-cache", // 캐싱을 하고 싶다면 선언해야함
-    }
-  );
-  console.log(res, "res");
-
-  if (!res?.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res?.json();
-}
+import PostRecommends from "./components/PostRecommends";
+import TabDecider from "./components/TabDecider";
 
 export default async function Home() {
   const queryClient = new QueryClient();
-  await queryClient?.prefetchQuery({
+  await queryClient.prefetchInfiniteQuery({
     queryKey: ["posts", "recommends"],
     queryFn: getPostRecommends,
+    initialPageParam: 0,
   });
   const dehydratedState = dehydrate(queryClient);
 
@@ -43,15 +26,7 @@ export default async function Home() {
         <TabProvider>
           <Tab />
           <PostForm />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+          <TabDecider />
         </TabProvider>
       </HydrationBoundary>
     </div>

@@ -1,32 +1,35 @@
-import Image from "next/image";
-import BackButton from "../components/BackButton";
-import Post from "../components/Post";
-export default function Profile() {
-  const user = {
-    id: "elonmusk",
-    nickname: "Elon Musk",
-    images: "/profile.jpg",
-  };
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { getUser } from "./lib/getUser";
+import UserPosts from "./components/UserPosts";
+import UserInfo from "./components/UserInfo";
+import { getUserPosts } from "./lib/getUserPosts";
+type Props = {
+  params: Promise<{ username: string }>;
+};
+
+export default async function Profile(props: Props) {
+  const { username } = await props.params;
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["users", username],
+    queryFn: getUser,
+  });
+  await queryClient.prefetchQuery({
+    queryKey: ["posts", "users", "recommends"],
+    queryFn: getUserPosts,
+  });
+  const dehydratedState = dehydrate(queryClient);
 
   return (
     <div>
-      <div className="flex flex-row items-center ">
-        <BackButton />
-        <h2 className="text-xl ml-2">제로초</h2>
-      </div>
-      <div className="flex flex-row items-center  mt-5">
-        <div className="mr-5 relative w-[100px] h-[100px] rounded-[100px] overflow-hidden ">
-          <Image src={user?.images} alt="" fill className="object-cover" />
-        </div>
-        <div className="flex-1 flex justify-between items-center">
-          <div>
-            <h2>제로초</h2>
-            <span>@zerocho0</span>
-          </div>
-          <button className="p-2 px-4 text-sm bg-black text-white rounded-full">팔로우</button>
-        </div>
-      </div>
-      <Post />
+      <HydrationBoundary state={dehydratedState}>
+        <UserInfo username={username} />
+        <UserPosts username={username} />
+      </HydrationBoundary>
     </div>
   );
 }

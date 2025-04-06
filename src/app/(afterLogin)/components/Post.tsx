@@ -27,11 +27,14 @@ const createMockPost = (): PostType => {
     },
     content: faker.lorem.paragraph(),
     createdAt: faker.date.recent(),
-    Images: Array.from({ length: faker.number.int({ min: 0, max: 4 }) }, (_, i) => ({
-      imageId: i + 1,
-      ImageId: i + 1,
-      link: faker.image.url({ width: 640, height: 480 }),
-    })),
+    Images: Array.from(
+      { length: faker.number.int({ min: 0, max: 4 }) },
+      (_, i) => ({
+        imageId: i + 1,
+        ImageId: i + 1,
+        link: faker.image.url({ width: 640, height: 480 }),
+      })
+    ),
   };
 };
 
@@ -69,7 +72,9 @@ export default function Post({ noImage, post }: Props) {
               <span className={style.postUserId}>@{target.User.id}</span>
               &nbsp; · &nbsp;
             </Link>
-            <span className={style.postDate}>{dayjs(target.createdAt).fromNow(true)}</span>
+            <span className={style.postDate}>
+              {dayjs(target.createdAt).fromNow(true)}
+            </span>
           </div>
           <div>{target.content}</div>
           {!noImage && target.Images && target.Images.length > 0 && (

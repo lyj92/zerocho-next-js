@@ -1,10 +1,11 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useContext } from "react";
+import { TabContext } from "./tabProvider";
 
 export default function Tab() {
-  const [tab, setTab] = useState("fol");
+  const { tab, setTab } = useContext(TabContext);
   const pathname = usePathname();
   const isRootPath = pathname === "/" || pathname === "/home";
 
@@ -24,7 +25,9 @@ export default function Tab() {
         >
           <div className="inline-block">
             추천
-            {tab === "rec" && <div className="bg-blue-400 h-[3px] mt-2 rounded-sm"></div>}
+            {tab === "rec" && (
+              <div className="bg-blue-400 h-[3px] mt-2 rounded-sm"></div>
+            )}
           </div>
         </div>
         <div
@@ -34,7 +37,10 @@ export default function Tab() {
           }}
         >
           <div className="inline-block ">
-            팔로우 중{tab === "fol" && <div className="bg-blue-400 h-[3px] mt-2 rounded-sm"></div>}
+            팔로우 중
+            {tab === "fol" && (
+              <div className="bg-blue-400 h-[3px] mt-2 rounded-sm"></div>
+            )}
           </div>
         </div>
       </div>
