@@ -4,8 +4,9 @@ import { Metadata } from "next";
 import { MSWProvider } from "./components/MSWComponent";
 import AuthSession from "./components/AuthSession";
 if (
-  process.env.NEXT_RUNTIME === "nodejs" &&
-  process.env.NODE_ENV !== "production"
+  process.env.NEXT_RUNTIME === "nodejs" ||
+  process.env.NODE_ENV === "production" ||
+  process.env.NEXT_PUBLIC_MSW_ENABLED === "false"
 ) {
   const { server } = require("@/mocks/http");
   server.listen();

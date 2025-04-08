@@ -1,6 +1,5 @@
 "use client";
 
-import style from "@/app/(afterLogin)/@modal/[username]/status/[id]/photo/[photoId]/photoModal.module.css";
 import ActionButton from "@/app/(afterLogin)/components/ActionButton";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -26,15 +25,13 @@ export default function ImageZone({ id }: Props) {
   if (!post?.Images[0]) {
     return null;
   }
+
   return (
-    <div className={style.imageZone}>
+    <div>
       <img src={post.Images[0].link} alt={post.content} />
-      <div
-        className={style.image}
-        style={{ backgroundImage: `url(${post.Images[0].link})` }}
-      />
-      <div className={style.buttonZone}>
-        <div className={style.buttonInner}>
+      <div style={{ backgroundImage: `url(${post.Images[0].link})` }} />
+      <div>
+        <div>
           <ActionButton />
         </div>
       </div>

@@ -10,6 +10,8 @@ function generateDate() {
   });
 }
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const User = [
   { id: "elonmusk", nickname: "Elon Musk", image: "/yRsRRjGO.jpg" },
   { id: "zerohch0", nickname: "제로초", image: "/5Udwvqim.jpg" },
@@ -20,6 +22,9 @@ export const User = [
 const Posts = [];
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
+
+console.log(baseUrl, "baseUrl");
+
 export const handlers = [
   http.post(`${baseUrl}/api/login`, () => {
     console.log("로그인");
@@ -37,19 +42,9 @@ export const handlers = [
       },
     });
   }),
-  http.post(`${baseUrl}/api/users`, async ({ request }) => {
-    console.log("회원가입");
-    // return HttpResponse.text(JSON.stringify("user_exists"), {
-    //   status: 403,
-    // });
-    return HttpResponse.text(JSON.stringify("ok"), {
-      headers: {
-        "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path=/",
-      },
-    });
-  }),
 
-  http.get(`${baseUrl}/api/postRecommends`, ({ request }) => {
+  http.get(`${baseUrl}/api/postRecommends`, async ({ request }) => {
+    await delay(3000);
     const url = new URL(request.url);
     const cursor = parseInt(url.searchParams.get("cursor") as string) || 0;
     return HttpResponse.json([
@@ -103,7 +98,8 @@ export const handlers = [
     ]);
   }),
 
-  http.get(`${baseUrl}/api/followingPosts?cursor=0`, ({ request }) => {
+  http.get(`${baseUrl}/api/followingPosts?cursor=0`, async ({ request }) => {
+    await delay(3000);
     return HttpResponse.json([
       {
         postId: 1,
@@ -335,13 +331,6 @@ export const handlers = [
         Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
         createdAt: generateDate(),
       },
-      {
-        postId: 5,
-        User: User[0],
-        content: `${5} 게시글 ${postId}의 답글`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
-        createdAt: generateDate(),
-      },
     ]);
   }),
 
@@ -363,8 +352,9 @@ export const handlers = [
     ]);
   }),
 
-  http.get(`${baseUrl}/api/postRecommends`, ({ request }) => {
+  http.get(`${baseUrl}/api/postRecommends`, async ({ request }) => {
     const url = new URL(request.url);
+    await delay(3000);
     const cursor = parseInt(url.searchParams.get("cursor") as string) || 0;
     return HttpResponse.json([
       {
@@ -407,6 +397,134 @@ export const handlers = [
         postId: cursor + 5,
         User: User[0],
         content: `${cursor + 5} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [
+          { imageId: 1, link: faker.image.urlLoremFlickr() },
+          { imageId: 2, link: faker.image.urlLoremFlickr() },
+          { imageId: 3, link: faker.image.urlLoremFlickr() },
+        ],
+        createdAt: generateDate(),
+      },
+
+      {
+        postId: cursor + 6,
+        User: User[0],
+        content: `${cursor + 6} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 7,
+        User: User[0],
+        content: `${cursor + 7} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 8,
+        User: User[0],
+        content: `${cursor + 8} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [
+          { imageId: 1, link: faker.image.urlLoremFlickr() },
+          { imageId: 2, link: faker.image.urlLoremFlickr() },
+        ],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 9,
+        User: User[0],
+        content: `${cursor + 9} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 10,
+        User: User[0],
+        content: `${cursor + 10} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [
+          { imageId: 1, link: faker.image.urlLoremFlickr() },
+          { imageId: 2, link: faker.image.urlLoremFlickr() },
+          { imageId: 3, link: faker.image.urlLoremFlickr() },
+        ],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 11,
+        User: User[0],
+        content: `${cursor + 11} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 12,
+        User: User[0],
+        content: `${cursor + 12} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 13,
+        User: User[0],
+        content: `${cursor + 13} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [
+          { imageId: 1, link: faker.image.urlLoremFlickr() },
+          { imageId: 2, link: faker.image.urlLoremFlickr() },
+        ],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 14,
+        User: User[0],
+        content: `${cursor + 14} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 15,
+        User: User[0],
+        content: `${cursor + 15} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [
+          { imageId: 1, link: faker.image.urlLoremFlickr() },
+          { imageId: 2, link: faker.image.urlLoremFlickr() },
+          { imageId: 3, link: faker.image.urlLoremFlickr() },
+          { imageId: 4, link: faker.image.urlLoremFlickr() },
+        ],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 16,
+        User: User[0],
+        content: `${cursor + 16} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 17,
+        User: User[0],
+        content: `${cursor + 17} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 18,
+        User: User[0],
+        content: `${cursor + 18} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [
+          { imageId: 1, link: faker.image.urlLoremFlickr() },
+          { imageId: 2, link: faker.image.urlLoremFlickr() },
+        ],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 19,
+        User: User[0],
+        content: `${cursor + 19} Z.com is so marvelous. I'm gonna buy that.`,
+        Images: [],
+        createdAt: generateDate(),
+      },
+      {
+        postId: cursor + 20,
+        User: User[0],
+        content: `${cursor + 20} Z.com is so marvelous. I'm gonna buy that.`,
         Images: [
           { imageId: 1, link: faker.image.urlLoremFlickr() },
           { imageId: 2, link: faker.image.urlLoremFlickr() },
