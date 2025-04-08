@@ -4,7 +4,6 @@ import BackButton from "@/app/(afterLogin)/components/BackButton";
 import Form from "next/form";
 import onSubmit from "../lib/signup";
 import { useFormState, useFormStatus } from "react-dom";
-import { useRouter } from "next/navigation";
 
 function showMessage(message: string | null | undefined) {
   console.log("message", message);
@@ -21,14 +20,8 @@ function showMessage(message: string | null | undefined) {
 }
 
 export default function SignUpForm() {
-  const router = useRouter();
   const [state, formAction] = useFormState(onSubmit, { message: "" });
   const { pending } = useFormStatus();
-  console.log("state", state);
-
-  if (state?.redirect) {
-    router.push("/home");
-  }
 
   return (
     <Form action={formAction}>
